@@ -34,7 +34,7 @@ class Database:
             )
         self.conn.commit()
         
-    def transaction_history(self, cash):
+    def show_transaction_history(self, cash):
         cur = self.conn.cursor()
         cur.execute(
                 """

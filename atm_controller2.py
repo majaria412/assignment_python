@@ -10,6 +10,7 @@ from exception import DoesNotExistException, InvalidFormatException, InvalidTran
 class AtmController:
     def __init__(self):
         self.Bank = bank
+        self.accounts = None
 
 	# 핀 번호 검증
     def check_pin_number(self, pin_num): # pin_num 입력 및 확인
@@ -46,10 +47,10 @@ class AtmController:
     def make_transaction(self, account_number, transaction_type, transaction_cash):
         # 예금 + 출금 했을 때, db 저장 후 잔금 반환
         try:
-            db = Database()
-            balance = db.get_balance(account_number)
-
             # 정해진 값을 상수화 시켜주기
+            # DEPOSIT = 1
+            # WITHDRAW = 2
+
             if transaction_type == "deposit":
                 if transaction_cash == 0:
                     raise exception
@@ -91,7 +92,9 @@ class AtmController:
 
 # 2. table 2개 account / transaction -> history는 어떻게 보여줄수있지?
 
-# 3. db 처리를 이렇게 하는게 맞을까?
+# 3. db 처리를 이렇게 하는게 맞을까? 
+# 독립성 → 프레임워크와 데이터베이스로부터의 분리? 어떻게 할 수 있지?
+# 4개의 메소드에 모두 디비를 끌고 들어오는데 이건 어떻게 되는걸까?
 
 # 4. 어떤 은행이 ORM을 사용한다면 이 Controller를 적용할 수 있을까?
 

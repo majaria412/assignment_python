@@ -67,22 +67,38 @@ unittest는 쉽게 코드를 테스트할 수 있게 도와줍니다. 아래의 
 
 ## 구현 내용
 
-### batch task
+1. atm_controller.py
+@ class 내부에 4개의 method를 사용
+    1) 핀 번호 검증: check_pin_number()
+    2) 계정 선택: find_accounts()
+    3) 계정 잔고 조회: check_balance()
+    4) 입금, 출금: make_transaction()
+
+2. database.py
+@ sqlite3 import, sql raw query 사용
+    1) get_account()
+    2) get_balance()
+    3) update_balance()
+    4) transaction_history()
+
+3. exception.py
+
+4. test.py
 
 ## 구조
 
+1. 2개의 table: accounts(id, pin_num, acc_num, balance), transaction_event(id, balance, history)
+
+2. 
+
 ### 주요 설계 포인트
 
-#### 추상클래스를 이용한 데이터 저장소로의 접근
-
-#### 작업단위(Unit of Work)를 이용한 트랜잭션 관리
-
-## 👨‍👨‍👧‍👦 실행환경 설절 방법
+## 실행환경 설절 방법
 
     ```commandline
     ```
 
-## 👨‍👨‍👧‍👦 과제 결과물 테스트 및 확인 방법
+## 과제 결과물 테스트 및 확인 방법
 
 1. POSTMAN 확인
     ```commandline
@@ -95,5 +111,5 @@ unittest는 쉽게 코드를 테스트할 수 있게 도와줍니다. 아래의 
   
     ```
 
-# 👨‍👨‍👧‍👦 Reference
+# Reference
 
