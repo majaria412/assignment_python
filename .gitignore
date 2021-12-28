@@ -243,6 +243,8 @@ tags
 # zdharma/zshelldoc tool's files
 zsdoc/data
 
+
+controller-env/
 # robbyrussell/oh-my-zsh/plugins/per-directory-history plugin's files
 # (when set-up to store the history in the local directory)
 .directory_history
