@@ -1,5 +1,11 @@
-class Exception(Exception):
+class InvalidFormatException(Exception):
     def __init__(self, msg):
-        super().__init__(msg)
+        self.msg = message
 
-InvalidFormatException("does not exist pin format")
+class DoesNotExistException(Exception):
+    def __init__(self, msg):
+        self.msg = message
+
+class InvalidTransactionException(Exception):
+    def __init__(self, msg):
+        self.msg = message
