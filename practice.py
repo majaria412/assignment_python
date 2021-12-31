@@ -1,20 +1,32 @@
-def func(a, b):
-        if (isinstance(a, int) != True and isinstance(b, int) != True)\n
-        (isinstance(a, float) != True and isinstance(b, float) != True:
-            raise Exception("must be integer")
-        elif a > b:
-            raise Exception("a<b")
-        else:
-            answer = 0
-            for i in range(a, b+1):
-                answer += i
-            return answer
+# 초기값 설정
+def __init__(self, pin_num, account):
+# 1. bank_data 변수를 만들어서, 기본적인 pin 번호와 account 번호를 입력해준다.
+# 2. 계좌가 다수인 경우를 대비해 리스트에 3개의 값을 미리 넣어줌.
 
-def stringify(num: int) -> str:
-    int가 string이 될 것이다. 타이핀팅 typing
-    1. 검증하는 로직 연산하는 로직 그걸 리턴
+# 핀 넘버 형식 확인
+def check_pin_format():
+# 1. input 으로 pin 번호 입력 받은 후, 2가지 검사를 해준다. (null 값, 4자리 수 확인)
+# 2. pin 번호 안에 문자열(특수문자 포함)이 포함되어있을 때 에러처리를 한다.
+# 3. 입력받은 pin 번호의 타입을 확인하고, int 형식이면 True를 반환한다.
 
-    2. 어떻게하면 더 줄일 수 있을까? simple하게
-    
+# 핀 넘버 계좌 조회
+def check_account():
+# 1. param으로 3가지 값을 받고, 초기값으로 설정한 pin 번호와 입력한 pin 번호(entered_pin)가 다르면 에러처리를 한다.
+# 2. 데이터베이스가 있다면 데이터베이스에 있는 pin 번호와 확인하는 작업을 거친다.
+# 3. 해당 pin 번호에 해당하는 계좌를 반환시켜주는데 그 때 복수의 계좌일 수 있으므로 가장 첫번 계좌를 반환한다.(account[0])
 
-print(func('a', 'b'))
+# 핀넘버가 존재하면, 계좌로 잔액 조회
+def check_balance(self, pin_num, account, balance):
+# 1. 먼저, pin 번호와 계좌 번호 존재 여부를 확인한다.
+# 2. 존재하면 초깃값으로 설정한 bank_data 정보에 balance를 더해준다.
+# 3. 해당 account에 맞는 잔액 반환한다.
+
+# 예금, 출금 거래
+def make_transaction(self, pin_num, account, transaction_type, cash):
+# 1. 예금 = 1, 출금 =2 상수화
+# 2. BALAMCE 값 100000으로 고정.
+# 3. 거래 형태가 1, 2가 아닌 경우, 계좌번호 안맞는 경우 에러 처리.
+# 4. 그렇지 않은 경우, 계좌와 BALANCE 입력.
+# 5. 거래 형태가 1인 경우와 2인 경우를 나눔.
+# - 1인 경우, 입금액이 0인 경우 에러처리, 그렇지 않으면 잔액에 예금액을 더해서 잔액 반환.
+# - 2인 경우, 출금액이 잔액보다 큰경우와 0인 경우 에러처리, 그렇지 않으면 잔액에 출금액을 빼고 잔액 반환.

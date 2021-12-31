@@ -1,12 +1,12 @@
 # exception 만 모아서 에러처리
-class InvalidFormatException(Exception):
-    def __init__(self, msg):
-        self.msg = message
+class InvalidValueException(Exception):
+    def __init__(self):
+        super().__init__()
 
-class DoesNotExistException(Exception):
+class LackOfBalanceException(Exception):
     def __init__(self, msg):
-        self.msg = message
+        super().__init__(msg)
 
 class InvalidTransactionException(Exception):
     def __init__(self, msg):
-        self.msg = message
+        super().__init__(msg)
