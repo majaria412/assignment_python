@@ -1,89 +1,69 @@
 # -*- coding: utf-8 -*-
-import re
+import database
 import exception
 
 
 class AtmController:
-    def __init__(self, pin_num, account):
-        # self.bank_data = {"pin_num":pin_num, "account":account}
-        self.bank_data = {"pin_num":pin_num, "account":[(account), (account+1), (account+2)]}
-        # self.account = [{"account":account}, {"account1":account + 1}, {"account2":account +2}]
+    def __init__(self, input_pin, balance):
+        self.balance = balance
+ 
+    def check_pin(self, input_pin):
+        if isinstance(input_pin, int) == True or len(str(input_pin)) == 4:
+            return input_pin
+        else:
+            raise Exception("invalid format")
 
-    # 핀 넘버 형식 확인
-    def check_pin_format(self):
-        input_pin = input("format('XXXX'): ")
-        
-        if input_pin == '':
-            raise Exception("it can't allow null value")
+    # 1234, 12345, 12-34, 1-234, a1234 와 같은 종류의 핀번호를 어떻게 처리할 것인가?
+    # 현재 코드는 오직 4자리 숫자만 처리할 수 있는 코드인데 어떻게 바꿀 수 있나 어떻게 열어둘거지?
 
-        if  len(input_pin) != 4:
-            raise Exception("it has to be 4-digit number")
+    def check_account(self, input_pin):
+        if self.input_pin != input_pin: # db의 input_pin과 param의 input_pin 값 비교
+            raise Exception("can't find a pin number")
+        else:
+            account = self.get_account[pin_num]
+            return account
 
-        pin_validation = re.compile('[a-zA-Zㄱ-힣\^\[\]\$\(\)\|\*\+\?\{\}\]\₩\~\!\@\+\#\%\&\/\'\".\,\=\-\_+]')
-        if pin_validation.search(input_pin):
-            raise Exception("it's incorrect pin format")
 
-        input_pin = int(input_pin)
-        if isinstance(input_pin, int) == True:
-            return True    
-        
-    # 핀 넘버로 계좌 조회
-    def check_account(self, pin_num, entered_pin, account):
-        if self.bank_data['pin_num'] != entered_pin:
-            raise Exception("can't find pin number")
+    # 계정 선택과 계정 잔고 조회는 db와의 연결이 필요한 부분인데 어떻게 처리할 수 있을까
+    # 어떤 db가 와도 다 통용될 수 있도록 하려면 어떻게 해야 할까?
 
-        return self.bank_data['account'][0]
 
-    # 핀 넘버가 존재하면, 계좌로 잔액 조회
-    def check_balance(self, pin_num, account, balance):
-        if pin_num != self.bank_data['pin_num']:
-            raise Exception("can't find pin number")
+# db = Database()
+# a = AtmController(db)
+# print(check_pin(input_pin))
+# accounts = a.find_accounts(pin)
 
-        if account != self.bank_data['account'][0]:
+    def check_balance(self, account):
+        if self.account != account:
             raise Exception("can't find account number")
-
-        self.bank_data = {"pin_num":pin_num, "account":{account:balance}}
-        return self.bank_data['account']
+        else:
+            balance = self.get_balance[account]
+            return balance
 
     # 예금, 출금 거래
-    def make_transaction(self, pin_num, account, transaction_type, cash):
-        DEPOSIT = 1
-        WITHDRAW = 2
-        BALANCE = 100000
-
-        if transaction_type != 1 and transaction_type != 2:
-            raise Exception(("no exist transaction_type"))
-
-        self.bank_data = {"pin_num":pin_num, "account":[(account), (account+1), (account+2)]}
+    def deposit(self, cash):
+        if cash <= 0:
+            raise Exception("deposit cash must be bigger than zero")
         
-        if account != self.bank_data['account'][0]:
-            raise Exception("does not exist account number")
+        self.balance += cash
+        return self.balance
 
-        self.bank_data['account'] = {account:BALANCE}
+    def withdraw(self, cash):
+        if cash == 0 or cash >= self.balance:
+            raise Exception("lack of balance")
 
-        if transaction_type == 1:
-            if cash == 0:
-                raise Exception("invalid access")
+        self.balance -= cash
+        return self.balance
 
-            BALANCE += cash
-            return BALANCE
- 
-        if transaction_type == 2:
-            if cash == 0 or cash >= BALANCE:
-                raise Exception("invalid access")
 
-            BALANCE -= cash
-            return BALANCE
+    # def __del__(self):
+    #     pass
 
-    def __del__(self):
-        pass
-
-my_bank = AtmController(1234, 123412341234)
-print(my_bank.check_pin_format())
-print(my_bank.check_account(1234, 1234, 123412341234))
-print(my_bank.check_balance(1234, 123412341234, 1000))
-print(my_bank.make_transaction(1234, 123412341234, 1, 120))
-
+# my_bank = AtmController(100000)
+# print(my_bank.check_pin('rrrr'))
+# print(my_bank.check_account(1234, 1234, 123412341234))
+# print(my_bank.check_balance(1234, 123412341234, 1000))
+# print(my_bank.deposit(2000))
 
 
 # 1. 내가 직접 error를 정의할 수 있는 것?
@@ -91,4 +71,3 @@ print(my_bank.make_transaction(1234, 123412341234, 1, 120))
 # 1-2. try-except 를 어느경우에 쓰고 어느경우에 안써야할까
 
 # 2. 어떤 은행이 ORM을 사용한다면 이 Controller를 적용할 수 있을까?
-
